@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <script src="{{ url_for('static', filename='form.js') }}" defer></script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Application Form</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            padding: 0;
+            background-color: #f4f4f4;
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+        h1 {
+            text-align: center;
+            color: #333;
+        }
+        h2 {
+            margin-top: 20px;
+            color: #333;
+        }
+        label {
+            display: block;
+            margin-top: 10px;
+            font-weight: bold;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            background-color: #f9f9f9;
+            cursor: pointer;
+        }
+        input[type="text"], input[type="email"], input[type="number"], select {
+            width: 100%;
+            padding: 10px;
+            margin-top: 5px;
+            border-radius: 4px;
+            border: 1px solid #ddd;
+            box-sizing: border-box;
+        }
+        input[type="checkbox"] {
+            display: none; /* Hide the actual checkbox */
+        }
+        .checkbox-container {
+            display: flex;
+            align-items: center;
+            margin-bottom: 5px;
+        }
+        .checkbox-container input[type="checkbox"]:checked + span {
+            color: #fff;
+            background-color: #007BFF;
+        }
+        .checkbox-container span {
+            margin-left: 10px;
+            flex-grow: 1;
+            padding: 10px;
+            border-radius: 4px;
+        }
+        .topics-section {
+            margin-top: 10px;
+        }
+        .submit-button {
+            margin-top: 20px;
+            text-align: center;
+        }
+        .submit-button input[type="submit"] {
+            padding: 10px 20px;
+            font-size: 16px;
+            border: none;
+            border-radius: 4px;
+            background-color: #007BFF;
+            color: #fff;
+            cursor: pointer;
+        }
+        .submit-button input[type="submit"]:hover {
+            background-color: #0056b3;
+        }
+        .instructions {
+            margin-top: 20px;
+            font-style: italic;
+        }
+    </style>    
+</head>
+<body>
+    <div class="container">
+        <h1>Application Form</h1>
+        <form method="post" action="/">
+            <label for="name">Name:</label>
+            <input type="text" id="name" name="name" required><br>
+
+            <label for="department">Department:</label>
+            <select id="department" name="department" required>
+                <option value="CSE">CSE</option>
+                <option value="IT">IT</option>
+                <option value="AI&DS">AI&DS</option>
+                <option value="EEE">EEE</option>
+                <option value="ECE">ECE</option>
+                <option value="MECH">MECH</option>
+                <option value="CIVIL">CIVIL</option>
+            </select><br>
+
+            <label for="email">Mail ID:</label>
+            <input type="email" id="email" name="email" required><br>
+
+            <label for="qualification">Qualification:</label>
+            <input type="text" id="qualification" name="qualification"><br>
+
+            <label for="designation">Designation:</label>
+            <input type="text" id="designation" name="designation"><br>
+
+            <label for="total_experience">Total Experience:</label>
+            <input type="number" id="total_experience" name="total_experience" required><br>
+
+            <label for="experience_in_nscet">Experience in NSCET:</label>
+            <input type="number" id="experience_in_nscet" name="experience_in_nscet" required><br>
+
+            <label for="willing">Willing:</label>
+            <select id="willing" name="willing">
+                <option value="no">No</option>
+                <option value="yes">Yes</option>
+            </select>
+            
+            <div id="topicsSection" class="topics-section" style="display: none;">
+                <h2>Aptitude</h2>
+                <label class="checkbox-container">
+                    <input type="checkbox" name="topics" value="II - Year | Numbers and Percentage">
+                    <span>II - Year | Numbers and Percentage</span>
+                </label>
+                <label class="checkbox-container">
+                    <input type="checkbox" name="topics" value="II - Year | Calendar & Blood Relation">
+                    <span>II - Year | Calendar & Blood Relation</span>
+                </label>
+                <label class="checkbox-container">
+                    <input type="checkbox" name="topics" value="II - Year | Clocks and Ages">
+                    <span>II - Year | Clocks and Ages</span>
+                </label>
+                <label class="checkbox-container">
+                    <input type="checkbox" name="topics" value="III - Year | Trigonometry, Algebra & Partnership">
+                    <span>III - Year | Trigonometry, Algebra & Partnership</span>
+                </label>
+                <label class="checkbox-container">
+                    <input type="checkbox" name="topics" value="III - Year | Divisibility rules and Crypt Arithmetic">
+                    <span>III - Year | Divisibility rules and Crypt Arithmetic</span>
+                </label>
+                <label class="checkbox-container">
+                    <input type="checkbox" name="topics" value="III - Year | Analogy, Alpha numeric series, Mixtures and Allegations">
+                    <span>III - Year | Analogy, Alpha numeric series, Mixtures and Allegations</span>
+                </label>
+                <label class="checkbox-container">
+                    <input type="checkbox" name="topics" value="IV - Year | Profit & Loss ,Probability">
+                    <span>IV - Year | Profit & Loss ,Probability</span>
+                </label>
+                <label class="checkbox-container">
+                    <input type="checkbox" name="topics" value="IV - Year | Time, Speed, Distance & Work">
+                    <span>IV - Year | Time, Speed, Distance & Work</span>
+                </label>
+                <label class="checkbox-container">
+                    <input type="checkbox" name="topics" value="IV - Year | Blood Relation">
+                    <span>IV - Year | Blood Relation</span>
+                </label>
+                <label class="checkbox-container">
+                    <input type="checkbox" name="topics" value="IV - Year | Average and Permutation">
+                    <span>IV - Year | Average and Permutation</span>
+                </label>
+                <label class="checkbox-container">
+                    <input type="checkbox" name="topics" value="IV - Year | Ratio and Proportion ,Geometry">
+                    <span>IV - Year | Ratio and Proportion ,Geometry</span>
+                </label>
+                <label class="checkbox-container">
+                    <input type="checkbox" name="topics" value="IV - Year | Mensuration & Logarithms">
+                    <span>IV - Year | Mensuration & Logarithms</span>
+                </label>
+                <label class="checkbox-container">
+                    <input type="checkbox" name="topics" value="IV - Year | Seating Arrangements ,Critical Reasoning">
+                    <span>IV - Year | Seating Arrangements ,Critical Reasoning</span>
+                </label>
+                <label class="checkbox-container">
+                    <input type="checkbox" name="topics" value="IV - Year | Series">
+                    <span>IV - Year | Series</span>
+                </label>
+                <label class="checkbox-container">
+                    <input type="checkbox" name="topics" value="IV - Year | Syllogism ,Calendar & Clock">
+                    <span>IV - Year | Syllogism ,Calendar & Clock</span>
+                </label>
+                <label class="checkbox-container">
+                    <input type="checkbox" name="topics" value="IV - Year | Cubes and Dices">
+                    <span>IV - Year | Cubes and Dices</span>
+                </label>
+                <label class="checkbox-container">
+                    <input type="checkbox" name="topics" value="IV - Year | Direction, Distance & Puzzle">
+                    <span>IV - Year | Direction, Distance & Puzzle</span>
+                </label>
+                <label class="checkbox-container">
+                    <input type="checkbox" name="topics" value="IV - Year | Verbal Reasoning ,Cause & Effect">
+                    <span>IV - Year | Verbal Reasoning ,Cause & Effect</span>
+                </label>
+                <label class="checkbox-container">
+                    <input type="checkbox" name="topics" value="IV - Year | Modifiers">
+                    <span>IV - Year | Modifiers</span>
+                </label>
+
+                <!-- Verbal Ability -->
+                <h2>Verbal Ability</h2>
+                <label class="checkbox-container">
+                    <input type="checkbox" name="topics" value="II - Year | Spelling, Spotting Grammatical Error & Preposition">
+                    <span>II - Year | Spelling, Spotting Grammatical Error & Preposition</span>
+                </label>
+                <label class="checkbox-container">
+                    <input type="checkbox" name="topics" value="III - Year | Arranging Jumbled Sentence, Direct and Indirect Speech, Cloze Passage, Connectors & Verbal Analog">
+                    <span>III - Year | Arranging Jumbled Sentence, Direct and Indirect Speech, Cloze Passage, Connectors & Verbal Analog</span>
+                </label>
+                <label class="checkbox-container">
+                    <input type="checkbox" name="topics" value="IV - Year | Spotting Errors ,Synonyms and Antonyms">
+                    <span>IV - Year | Spotting Errors ,Synonyms and Antonyms</span>
+                </label>
+                <label class="checkbox-container">
+                    <input type="checkbox" name="topics" value="IV - Year | Sentence Correction, Active & Passive Voice">
+                    <span>IV - Year | Sentence Correction, Active & Passive Voice</span>
+                </label>
+                <label class="checkbox-container">
+                    <input type="checkbox" name="topics" value="IV - Year | Tenses">
+                    <span>IV - Year | Tenses</span>
+                </label>
+                <label class="checkbox-container">
+                    <input type="checkbox" name="topics" value="IV - Year | Critical Thinking & Sentence Completion">
+                    <span>IV - Year | Critical Thinking & Sentence Completion</span>
+                </label>
+
+                <!-- Soft Skills -->
+                <h2>Soft Skills</h2>
+                <label class="checkbox-container">
+                    <input type="checkbox" name="topics" value="II - Year | Active Listening ,Interpersonal Skills & Emotional Intelligence">
+                    <span>II - Year | Active Listening ,Interpersonal Skills & Emotional Intelligence</span>
+                </label>
+                <label class="checkbox-container">
+                    <input type="checkbox" name="topics" value="III - Year | Communication Skills, Teamwork & Problem Solving">
+                    <span>III - Year | Communication Skills, Teamwork & Problem Solving</span>
+                </label>
+                <label class="checkbox-container">
+                    <input type="checkbox" name="topics" value="IV - Year | Adaptability ,Time Management & Conflict Resolution">
+                    <span>IV - Year | Adaptability ,Time Management & Conflict Resolution</span>
+                </label>
+                <label class="checkbox-container">
+                    <input type="checkbox" name="topics" value="IV - Year | Decision Making ,Leadership">
+                    <span>IV - Year | Decision Making ,Leadership</span>
+                </label>
+
+                <!-- Technical -->
+                <h2>Technical</h2>
+                <label class="checkbox-container">
+                    <input type="checkbox" name="topics" value="II - Year | Basics of Computer Programming & Networking">
+                    <span>II - Year | Basics of Computer Programming & Networking</span>
+                </label>
+                <label class="checkbox-container">
+                    <input type="checkbox" name="topics" value="III - Year | Data Structures, Algorithms & Databases">
+                    <span>III - Year | Data Structures, Algorithms & Databases</span>
+                </label>
+                <label class="checkbox-container">
+                    <input type="checkbox" name="topics" value="III - Year | Operating Systems & Computer Architecture">
+                    <span>III - Year | Operating Systems & Computer Architecture</span>
+                </label>
+                <label class="checkbox-container">
+                    <input type="checkbox" name="topics" value="IV - Year | Web Technologies, Software Engineering & Project Management">
+                    <span>IV - Year | Web Technologies, Software Engineering & Project Management</span>
+                </label>
+                <label class="checkbox-container">
+                    <input type="checkbox" name="topics" value="IV - Year | Advanced Topics in AI, Machine Learning & Big Data">
+                    <span>IV - Year | Advanced Topics in AI, Machine Learning & Big Data</span>
+                </label>
+                <label class="checkbox-container">
+                    <input type="checkbox" name="topics" value="IV - Year | Cybersecurity & Cloud Computing">
+                    <span>IV - Year | Cybersecurity & Cloud Computing</span>
+                </label>
+            </div>
+
+            <div class="submit-button">
+                <input type="submit" value="Submit">
+            </div>
+        </form>
+    </div>
+    <script>
+        document.getElementById('willing').addEventListener('change', function() {
+            const topicsSection = document.getElementById('topicsSection');
+            if (this.value === 'yes') {
+                topicsSection.style.display = 'block';
+            } else {
+                topicsSection.style.display = 'none';
+            }
+        });
+    </script>
+</body>
+</html>
