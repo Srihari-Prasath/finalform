@@ -14,36 +14,55 @@ def save_to_db(data, willing):
     cursor = conn.cursor()
     
     email = data[2]
-    
+    phone = data[3]
+
     if willing:
+        # Check if the user already exists in the willing_users table
         cursor.execute('SELECT COUNT(*) FROM willing_users WHERE email = ?', (email,))
         exists = cursor.fetchone()[0]
         
         if exists:
+            # Update existing record
             cursor.execute('''
                 UPDATE willing_users
-                SET name=?, department=?, qualification=?, designation=?, total_experience=?, experience_in_nscet=?, topics=?
+                SET name=?, department=?, email=?, Phone=?, qualification=?, designation=?, total_experience=?, experience_in_nscet=?, topics=?
                 WHERE email=?
-            ''', (*data[0:7], email))
+            ''', (*data[0:9], email))  # Include all columns
         else:
+            # Insert new record
             cursor.execute('''
-                INSERT INTO willing_users (name, department, email, qualification, designation, total_experience, experience_in_nscet, topics)
-                VALUES (?, ?, ?, ?, ?, ?, ?, ?)
-            ''', data)
+                INSERT INTO willing_users (name, department, email, Phone, qualification, designation, total_experience, experience_in_nscet, topics)
+                VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
+            ''', data)  # Ensure data has all 9 values
     else:
-        cursor.execute('''
-            INSERT INTO not_willing_users (name, department, email, qualification, designation, total_experience, experience_in_nscet)
-            VALUES (?, ?, ?, ?, ?, ?, ?)
-        ''', data[:-1])  # Exclude topics for not willing users
+        # Check if the user already exists in the not_willing_users table
+        cursor.execute('SELECT COUNT(*) FROM not_willing_users WHERE email = ?', (email,))
+        exists = cursor.fetchone()[0]
+
+        if exists:
+            # Update existing record
+            cursor.execute('''
+                UPDATE not_willing_users
+                SET name=?, department=?, email=?, Phone=?, qualification=?, designation=?, total_experience=?, experience_in_nscet=?
+                WHERE email=?
+            ''', (*data[0:8], phone, email))  # Include phone and email
+        else:
+            # Insert new record
+            cursor.execute('''
+                INSERT INTO not_willing_users (name, department, email, Phone, qualification, designation, total_experience, experience_in_nscet)
+                VALUES (?, ?, ?, ?, ?, ?, ?, ?)
+            ''', data[:8])  # Ensure data has 8 values (excluding Phone)
 
     conn.commit()
     conn.close()
-
 
 def export_to_excel():
     conn = sqlite3.connect('database.db')
     df_willing = pd.read_sql_query('SELECT * FROM willing_users ORDER BY timestamp ASC', conn)
     df_not_willing = pd.read_sql_query('SELECT * FROM not_willing_users', conn)
+
+    # Ensure the directory exists
+    os.makedirs(os.path.dirname(EXCEL_PATH), exist_ok=True)
 
     # Export to Excel
     with pd.ExcelWriter(EXCEL_PATH) as writer:
@@ -58,25 +77,17 @@ def form():
         name = request.form['name']
         department = request.form['department']
         email = request.form['email']
+        phone = request.form.get('phone', '')  # Handle phone number
         qualification = request.form['qualification']
         designation = request.form['designation']
         total_experience = int(request.form['total_experience'])
         experience_in_nscet = int(request.form['experience_in_nscet'])
         topics = ','.join(request.form.getlist('topics'))  # Joining selected topics
         
-        print(f"Selected Topics: {topics}")  # Debug print
+        willing = 'willing' in request.form
 
-        # Determine willing status based on form data
-        willing = request.form.get('willing') == 'yes'
-
-        # Data tuple based on willingness
-        data = (name, department, email, qualification, designation, total_experience, experience_in_nscet, topics)
-        
-        # Save data to the appropriate table
-        if willing:
-            save_to_db(data, willing)
-        else:
-            save_to_db(data, False)  # False for not willing
+        data = (name, department, email, phone, qualification, designation, total_experience, experience_in_nscet, topics)
+        save_to_db(data, willing)
 
         # Trigger data export to Excel
         export_to_excel()
