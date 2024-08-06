@@ -49,21 +49,40 @@
         input[type="checkbox"] {
             display: none; /* Hide the actual checkbox */
         }
+        /* Basic styling for the container */
         .checkbox-container {
             display: flex;
             align-items: center;
-            margin-bottom: 5px;
+            padding: 8px 12px; /* Reduced padding for better visual definition */
+            width: 500px;
+            border: 2px solid #ddd;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease, border-color 0.3s ease, color 0.3s ease; /* Smooth transition for background and text color */
         }
-        .checkbox-container input[type="checkbox"]:checked + span {
-            color: #fff;
-            background-color: #007BFF;
+
+        /* Hide the default checkbox */
+        .checkbox-container input[type="checkbox"] {
+            display: none;
         }
+
+        /* Styling for the label's span element */
         .checkbox-container span {
-            margin-left: 10px;
-            flex-grow: 1;
-            padding: 10px;
-            border-radius: 4px;
+            margin-left: 8px;
+            font-size: 16px;
+            color: #333;
+            width: 500px;
+            transition: background-color 0.3s ease, color 0.3s ease; /* Smooth transition for background and text color */
+            padding: 8px 12px; /* Padding inside the span for better visibility */
         }
+
+        /* When the checkbox is checked, change the label color */
+        .checkbox-container input[type="checkbox"]:checked + span {
+            background-color: #007BFF; /* Blue background color */
+            color: #fff; /* White text color */
+            border: 2px solid #007BFF; /* Matching border color */
+        }
+       
         .topics-section {
             margin-top: 10px;
         }
@@ -342,8 +361,9 @@
     </div>
     <script>
         document.getElementById('willing').addEventListener('change', function() {
-            const topicsSection = document.getElementById('topicsSection');
-            if (this.value === 'yes') {
+            var willingValue = this.value;
+            var topicsSection = document.getElementById('topicsSection');
+            if (willingValue === 'yes') {
                 topicsSection.style.display = 'block';
             } else {
                 topicsSection.style.display = 'none';
